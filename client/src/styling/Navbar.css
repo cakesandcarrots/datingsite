@@ -20,6 +20,7 @@ body    {
 .navbarbuttons{
     font-family: rockoflf;
     font-size: large;
+    letter-spacing: 1px;
     font-weight:700;
     flex: 1;
     background: none;
