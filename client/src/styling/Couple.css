@@ -1,0 +1,55 @@
+.couplecontainer{
+padding-left: 1.5rem;
+display: flex;    
+justify-content: space-around;
+padding-top: 3rem;
+gap: 0;
+position: relative;
+
+}
+
+.coupleground{
+    height: 1rem;
+    width: 100%;
+    left: 0;
+    position: absolute;
+    background-color:#FFE1A6;
+    top: 32rem;
+    z-index: -1;
+
+}
+
+.girl{
+    height: 30rem;
+
+}
+
+.guy{
+    height: 30rem;
+}
+
+.bigheart{
+    height: 28rem;
+    
+}
+
+.left{
+    position: absolute;
+    height: 12rem;
+    left: 0;
+    right: 0;
+    top: 20rem;
+    bottom: 0;
+
+
+
+}
+
+.right{
+    position: absolute;
+    height: 10rem;
+    left: 89.5rem;
+    right: 0;
+    top: 22rem;
+    bottom: 0;
+}
