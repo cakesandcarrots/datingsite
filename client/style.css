@@ -1,0 +1,27 @@
+@font-face {
+    font-family: 'Blitzwing';
+    src: url('./src/fonts/blitzwing.otf') format('opentype');
+  }
+  
+  @font-face {
+    font-family: 'rockoflf';
+    src: url('./src/fonts/rockoflf.ttf') format('truetype');
+  }
+  
+  @font-face {
+    font-family: "truenorg";
+    src: url("../fonts/truenorg.otf")format('truetype');
+  }
+  
+  @font-face {
+    font-family:" aileron";
+    src: url("../fonts/Aileron-Light.otf")format('truetype');
+  }
+  
+  
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+  
+
+  
