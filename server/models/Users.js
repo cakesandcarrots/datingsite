@@ -14,10 +14,14 @@ const userSchema = new mongoose.Schema({
   height: { type: Number, required: true },
   weight: { type: Number, required: true },
   ethnicity: { type: String, required: true },
-  location: { type: Object, required: true },
+  location: {
+    latitude: { type: Number, required: true },
+    longitude: { type: Number, required: true }
+  },
   password: { type: String, required: true },
   profilePicture: { type: Buffer, required: true },
-}, { collection: 'users' });
+  status: { type: Number, default: 0 }, 
+});
 
 const User = mongoose.model('User', userSchema);
 export default User;
