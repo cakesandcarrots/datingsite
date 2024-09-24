@@ -11,10 +11,8 @@ const AdminLogin = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(username,password)
     if (username =='admin' && password == 'pass') {
       setAuthenticated(true); 
-      console.log("hi")
       setUsername('');
       setPassword('');
       setError('');

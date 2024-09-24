@@ -12,7 +12,7 @@ function Couple() {
 
       <img className="h-120 animate-slide-in-left " src={girl} alt="" />
       <img className="absolute h-48 left-0 top-80" src={left} alt="" />
-      <img className="absolute h-40 xl:left-[68rem] xl:top-88 2xl:left-[72rem]" src={right} alt="" />
+      <img className="absolute h-40 xl:left-[68rem] xl:top-88 2xl:left-[89rem]" src={right} alt="" />
       <div className="h-4 w-full right-0 bottom-0 absolute bg-[#FFE1A6] z-[-1]"></div>
     </div>
   );

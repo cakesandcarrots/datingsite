@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Search, Bell, Users, MessageSquare, Settings, FileText, BarChart, Edit } from 'lucide-react';
+import { Search, Bell, Users, MessageSquare, Settings, BarChart, Edit } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { User } from 'lucide-react';
 
 const AdminDashboard = () => {
   const [dashboardData, setDashboardData] = useState({
@@ -15,7 +16,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/dashboard-data');
+        const response = await axios.get('http://localhost:5000/api/user/dashboard');
         setDashboardData(response.data);
       } catch (error) {
         console.error('Error fetching dashboard data:', error);
@@ -40,10 +41,7 @@ const AdminDashboard = () => {
   };
 
   const menuItems = [
-    { icon: <Users size={20} />, label: 'User Management' },
-    { icon: <MessageSquare size={20} />, label: 'Support Tickets' },
-    { icon: <FileText size={20} />, label: 'Reports' },
-    { icon: <Settings size={20} />, label: 'Settings' },
+    { icon: <Users size={20} />, label: 'User Management' }
   ];
 
   const calculateUserAcceptancePercentage = () => {
@@ -72,8 +70,10 @@ const AdminDashboard = () => {
   };
 
   const openUserEditPanel = (userId) => {
+    // Open UserEditPanel in a new tab
     window.open(`/edit-user/${userId}`, '_blank');
   };
+
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
@@ -97,7 +97,7 @@ const AdminDashboard = () => {
           </ul>
         </nav>
       </aside>
-  
+
       {/* Main content */}
       <main className="flex-1 overflow-y-auto bg-gray-100">
         {/* Top navigation */}
@@ -113,11 +113,13 @@ const AdminDashboard = () => {
             </div>
             <div className="flex items-center">
               <Bell className="text-gray-500 mr-4" size={20} />
-              <img src="/api/placeholder/32/32" alt="Admin" className="w-8 h-8 rounded-full" />
+              <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center">
+                <User size={24} className="text-gray-600" />
+              </div>
             </div>
           </div>
         </header>
-  
+
         {/* Dashboard content */}
         <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-semibold text-gray-800 mb-6">Dashboard Overview</h2>
@@ -136,7 +138,7 @@ const AdminDashboard = () => {
               </div>
             ))}
           </div>
-  
+
           {/* Recent Activities table */}
           <div className="bg-white shadow rounded-lg overflow-hidden">
             <table className="min-w-full divide-y divide-gray-200">

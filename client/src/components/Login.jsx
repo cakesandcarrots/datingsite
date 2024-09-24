@@ -13,7 +13,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/login', { email, password }, { withCredentials: true });
+      const response = await axios.post('http://localhost:5000/api/auth/login', { email, password }, { withCredentials: true });
 
       if (response.status === 200) {
         const { isAdmin } = response.data;

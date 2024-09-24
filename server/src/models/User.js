@@ -15,8 +15,8 @@ const userSchema = new mongoose.Schema({
   weight: { type: Number, required: true },
   ethnicity: { type: String, required: true },
   location: {
-    latitude: { type: Number, required: true },
-    longitude: { type: Number, required: true }
+    lat: { type: Number, required: true },
+    lng: { type: Number, required: true }
   },
   password: { type: String, required: true },
   profilePicture: { type: Buffer, required: true },

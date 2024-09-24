@@ -51,7 +51,6 @@ const ProfileMatches = () => {
         withCredentials: true,
         baseURL: 'http://localhost:5000' 
       });
-      console.log(response.data)
       if (Array.isArray(response.data)) {
         setProfiles(response.data);
       } else {

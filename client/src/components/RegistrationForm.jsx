@@ -39,7 +39,7 @@ const RegistrationForm = () => {
     const fetchDropdownData = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_BASE_URL}/fetchData`
+          `${import.meta.env.VITE_API_BASE_URL}/staticdata/fetchData`
         );
         console.log("Fetched dropdown data:", response.data);
         setDropdownData(response.data);
@@ -142,7 +142,7 @@ const RegistrationForm = () => {
 
     try {
       await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/register`,
+        `${import.meta.env.VITE_API_BASE_URL}/auth/register`,
         formDataToSend,
         {
           headers: {

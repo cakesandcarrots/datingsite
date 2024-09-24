@@ -17,10 +17,12 @@ const UserEditPanel = () => {
   const { userId } = useParams();
   const navigate = useNavigate();
 
+  if(user!=null)
+console.log(user.profilePicture)
   useEffect(() => {
     const fetchOptions = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/fetchData');
+        const res = await axios.get('http://localhost:5000/api/staticdata/fetchData');
         setOptions({
           gender: res.data.gender,
           hairColor: res.data.haircolor,
@@ -32,7 +34,6 @@ const UserEditPanel = () => {
         setError('Failed to fetch options data');
       }
     };
-
     const fetchUser = async () => {
       try {
         const response = await axios.get(`http://localhost:5000/api/user/${userId}`);
@@ -63,31 +64,57 @@ const UserEditPanel = () => {
       [name]: files[0]
     }));
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Fields allowed to be submitted
+      const allowedFields = [
+        'firstname', 'lastname', 'email', 'gender', 'dateOfBirth', 
+        'hobbies', 'biography', 'hairColor', 'eyeColor', 'bodyType', 
+        'height', 'weight', 'ethnicity', 'location', 'profilePicture'
+      ];
+  
+      // Create FormData and filtered data object
       const formData = new FormData();
+  
       Object.keys(user).forEach(key => {
-        if (key === 'hobbies') {
-          formData.append(key, JSON.stringify(user[key]));
-        } else if (key === 'profilePicture' && user[key] instanceof File) {
-          formData.append(key, user[key]);
-        } else {
-          formData.append(key, user[key]);
+        if (allowedFields.includes(key)) {
+          // Special handling for specific fields
+          if (key === 'hobbies') {
+            formData.append(key, JSON.stringify(user[key])); // Special handling for arrays
+          } else if (key === 'location') {
+            formData.append(key, JSON.stringify(user[key])); // Special handling for location object
+          } else if (key === 'profilePicture' && user[key] instanceof File) {
+            formData.append(key, user[key]); // Handle file upload
+          } else {
+            formData.append(key, user[key]); // Append other fields
+          }
         }
       });
-
+      // Log the filtered FormData except for profilePicture
+      console.log('Filtered FormData (excluding profilePicture):');
+      for (let pair of formData.entries()) {
+        if (pair[0] !== 'profilePicture') {
+          console.log(`${pair[0]}: ${pair[1]}`);
+        }
+      }
+  
+      // Make the POST request with the FormData, including the profile picture
       await axios.put(`http://localhost:5000/api/user/${userId}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       });
+  
       alert('User data updated successfully');
     } catch (err) {
       alert('Failed to update user data');
     }
   };
+  
+  
+
+  
 
   if (loading) return <div className="text-center mt-8">Loading...</div>;
   if (error) return <div className="text-center mt-8 text-red-500">{error}</div>;
@@ -109,7 +136,7 @@ const UserEditPanel = () => {
             <div className="flex justify-center mb-6">
               {user.profilePicture && (
                 <img
-                  src={`data:image/png;base64,${user.profilePicture}`}
+                  src={user.profilePicture}
                   alt="Profile"
                   className="w-32 h-32 rounded-full object-cover"
                 />
@@ -160,7 +187,7 @@ const UserEditPanel = () => {
                     className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   >
                     {options.gender.map(g => (
-                      <option key={g.id} value={g.id}>{g.name}</option>
+                      <option key={g.id} value={g.id}>{g.gender}</option>
                     ))}
                   </select>
                 </div>
@@ -211,7 +238,7 @@ const UserEditPanel = () => {
                     className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   >
                     {options.hairColor.map(h => (
-                      <option key={h.id} value={h.id}>{h.name}</option>
+                      <option key={h.id} value={h.id}>{h.color}</option>
                     ))}
                   </select>
                 </div>
@@ -225,7 +252,7 @@ const UserEditPanel = () => {
                     className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   >
                     {options.eyeColor.map(e => (
-                      <option key={e.id} value={e.id}>{e.name}</option>
+                      <option key={e.id} value={e.id}>{e.color}</option>
                     ))}
                   </select>
                 </div>
@@ -239,7 +266,7 @@ const UserEditPanel = () => {
                     className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   >
                     {options.bodyType.map(b => (
-                      <option key={b.id} value={b.id}>{b.name}</option>
+                      <option key={b.id} value={b.id}>{b.shape}</option>
                     ))}
                   </select>
                 </div>
@@ -275,7 +302,7 @@ const UserEditPanel = () => {
                     className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   >
                     {options.ethnicity.map(e => (
-                      <option key={e.id} value={e.id}>{e.name}</option>
+                      <option key={e.id} value={e.id}>{e.ethnicity}</option>
                     ))}
                   </select>
                 </div>

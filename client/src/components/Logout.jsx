@@ -8,7 +8,7 @@ const Logout = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post('http://localhost:5000/api/logout', {}, { withCredentials: true });
+      await axios.post('http://localhost:5000/api/auth/logout', {}, { withCredentials: true });
       setAuthenticated(false);
       navigate('/'); // Redirect to home page after logout
     } catch (error) {
